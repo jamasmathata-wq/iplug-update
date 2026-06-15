@@ -54,6 +54,7 @@ function Home() {
             <div className="grid h-full place-items-center text-center text-slate-500 dark:text-slate-500">
               <div className="w-full max-w-full">
                 <img src="/images/ekurhuleni.jpg" alt="Ekurhuleni Campus" className="mx-auto mb-5 h-20 w-auto rounded-lg object-cover" onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = 'https://via.placeholder.com/160x40?text=Ekurhuleni'; }} />
+                <img src="/images/ekurhuleni-logo.jpg" alt="EEC Springs Campus" className="mx-auto mb-3 h-16 w-auto object-contain" />
                 <p className="max-w-sm text-lg leading-8">Welcome to iPLUG YAMA CAMPUS — explore student services, announcements and resources.</p>
               </div>
             </div>
