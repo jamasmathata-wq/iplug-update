@@ -53,8 +53,7 @@ function Home() {
           <div className="h-[420px] rounded-[32px] border border-accent/20 bg-gradient-to-br from-accent/5 via-white to-secondary/5 p-8 dark:from-slate-900 dark:via-slate-950 dark:to-slate-950">
             <div className="grid h-full place-items-center text-center text-slate-500 dark:text-slate-500">
               <div className="w-full max-w-full">
-                <img src="/images/ekurhuleni.jpg" alt="Ekurhuleni Campus" className="mx-auto mb-5 h-20 w-auto rounded-lg object-cover" onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = 'https://via.placeholder.com/160x40?text=Ekurhuleni'; }} />
-                <img src="/images/ekurhuleni-logo.jpg" alt="EEC Springs Campus" className="mx-auto mb-3 h-16 w-auto object-contain" />
+                <img src="https://www.ccbc.co.za/media/com_mtree/images/listings/o/4398.jpg" alt="EEC Springs Campus" className="mx-auto mb-5 h-24 w-auto rounded-lg object-cover" onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = 'https://via.placeholder.com/160x40?text=EEC+Springs'; }} />
                 <p className="max-w-sm text-lg leading-8">Welcome to iPLUG YAMA CAMPUS — explore student services, announcements and resources.</p>
               </div>
             </div>
