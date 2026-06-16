@@ -17,7 +17,7 @@ function Navbar({ darkMode, setDarkMode }) {
     <header className="sticky top-0 z-40 border-b border-slate-200/60 bg-white/95 backdrop-blur-xl dark:border-slate-700/60 dark:bg-slate-950/95">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-4">
         <Link to="/" className="flex items-center gap-3 text-lg font-semibold text-primary dark:text-white">
-          <img src="/images/logo.png" alt="iPLUG YAMA CAMPUS" className="h-7 w-auto rounded-sm object-contain" onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = 'https://via.placeholder.com/160x40?text=iPLUG+YAMA+Campus'; }} />
+          <img src="https://www.ccbc.co.za/media/com_mtree/images/listings/o/4398.jpg" alt="iPLUG YAMA CAMPUS" className="h-7 w-auto rounded-sm object-contain" onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = 'https://via.placeholder.com/160x40?text=iPLUG+YAMA+Campus'; }} />
           <span>iPLUG YAMA CAMPUS</span>
         </Link>
 
