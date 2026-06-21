@@ -1,16 +1,16 @@
 function DashboardCard({ title, value, description, icon }) {
   return (
-    <div className="card p-6">
-      <div className="flex items-center justify-between gap-4">
-        <div>
-          <p className="text-sm font-semibold text-slate-500 dark:text-slate-400">{title}</p>
-          <p className="mt-3 text-3xl font-semibold text-slate-900 dark:text-slate-100">{value}</p>
+    <div className="card p-5">
+      <div className="flex items-start justify-between gap-3">
+        <div className="space-y-1">
+          <p className="text-xs font-medium text-slate-500 dark:text-slate-400">{title}</p>
+          <p className="text-2xl font-bold text-slate-900 dark:text-white">{value}</p>
+          {description && <p className="text-xs text-slate-400 dark:text-slate-500">{description}</p>}
         </div>
-        <div className="min-h-[56px] min-w-[56px] rounded-3xl bg-primary/10 text-primary grid place-items-center">
+        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
           {icon}
         </div>
       </div>
-      {description && <p className="mt-4 text-sm text-slate-500 dark:text-slate-400">{description}</p>}
     </div>
   );
 }

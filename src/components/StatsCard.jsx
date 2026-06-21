@@ -1,20 +1,15 @@
 function StatsCard({ value, label, accentColor = 'primary' }) {
-  const colorClass = {
-    primary: 'border-t-4 border-primary',
-    secondary: 'border-t-4 border-secondary',
-    accent: 'border-t-4 border-accent'
-  }[accentColor] || 'border-t-4 border-primary';
-
-  const textColorClass = {
-    primary: 'text-primary',
-    secondary: 'text-secondary',
-    accent: 'text-accent'
-  }[accentColor] || 'text-primary';
+  const colors = {
+    primary: 'border-l-4 border-primary text-primary',
+    secondary: 'border-l-4 border-secondary text-secondary',
+    accent: 'border-l-4 border-accent text-accent'
+  };
+  const cls = colors[accentColor] || colors.primary;
 
   return (
-    <div className={`card p-6 text-center ${colorClass}`}>
-      <p className={`text-4xl font-bold ${textColorClass}`}>{value}</p>
-      <p className="mt-3 text-sm uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">{label}</p>
+    <div className={`card p-6 ${cls.split(' ').slice(0, 2).join(' ')}`}>
+      <p className={`text-3xl font-bold ${cls.split(' ').slice(2).join(' ')}`}>{value}</p>
+      <p className="mt-2 text-xs font-medium uppercase tracking-wider text-slate-500 dark:text-slate-400">{label}</p>
     </div>
   );
 }

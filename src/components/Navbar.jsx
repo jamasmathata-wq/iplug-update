@@ -1,33 +1,33 @@
 import { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { HiOutlineMenu, HiOutlineX, HiMoon, HiSun, HiUserCircle } from 'react-icons/hi';
+import { HiOutlineMenu, HiOutlineX, HiMoon, HiSun } from 'react-icons/hi';
 
 const navItems = [
   { label: 'Home', to: '/' },
   { label: 'About', to: '/about' },
   { label: 'Contact', to: '/contact' },
-  { label: 'Student Login', to: '/student-login' },
-  { label: 'Lecturer Login', to: '/lecturer-login' }
+  { label: 'Login', to: '/login' },
+  { label: 'Guest Access', to: '/guest' }
 ];
 
 function Navbar({ darkMode, setDarkMode }) {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-slate-200/60 bg-white/95 backdrop-blur-xl dark:border-slate-700/60 dark:bg-slate-950/95">
+    <header className="sticky top-0 z-40 border-b border-slate-200/60 bg-white/80 backdrop-blur-xl dark:border-slate-800/60 dark:bg-slate-950/80">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-4">
-        <Link to="/" className="flex items-center gap-3 text-lg font-semibold text-primary dark:text-white">
-          <img src="https://www.ccbc.co.za/media/com_mtree/images/listings/o/4398.jpg" alt="iPLUG YAMA CAMPUS" className="h-7 w-auto rounded-sm object-contain" onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = 'https://via.placeholder.com/160x40?text=iPLUG+YAMA+Campus'; }} />
-          <span>iPLUG YAMA CAMPUS</span>
+        <Link to="/" className="flex items-center gap-3 text-lg font-bold text-primary dark:text-primary-200">
+          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-white text-sm font-bold shadow-sm">iP</div>
+          <span className="hidden sm:inline">iPLUG YAMA CAMPUS</span>
         </Link>
 
-        <nav className="hidden items-center gap-6 md:flex">
+        <nav className="hidden items-center gap-1 md:flex">
           {navItems.map((item) => (
             <NavLink
               key={item.to}
               to={item.to}
               className={({ isActive }) =>
-                `text-sm font-medium transition border-b-2 pb-1 ${isActive ? 'text-primary border-secondary' : 'text-slate-600 hover:text-primary border-transparent dark:text-slate-300'}`
+                `rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200 ${isActive ? 'bg-primary/10 text-primary' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white'}`
               }
             >
               {item.label}
@@ -35,11 +35,11 @@ function Navbar({ darkMode, setDarkMode }) {
           ))}
         </nav>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
           <button
             type="button"
             onClick={() => setDarkMode(!darkMode)}
-            className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-slate-200 bg-white text-slate-600 transition hover:border-primary hover:text-primary dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-600 transition-all duration-200 hover:border-primary hover:text-primary hover:shadow-sm dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:border-primary dark:hover:text-primary"
             aria-label="Toggle dark mode"
           >
             {darkMode ? <HiSun className="h-5 w-5" /> : <HiMoon className="h-5 w-5" />}
@@ -48,8 +48,8 @@ function Navbar({ darkMode, setDarkMode }) {
           <button
             type="button"
             onClick={() => setOpen((prev) => !prev)}
-            className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-slate-200 bg-white text-slate-600 transition hover:border-primary hover:text-primary dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 md:hidden"
-            aria-label="Open menu"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-600 transition-all duration-200 hover:border-primary hover:text-primary dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 md:hidden"
+            aria-label={open ? 'Close menu' : 'Open menu'}
           >
             {open ? <HiOutlineX className="h-5 w-5" /> : <HiOutlineMenu className="h-5 w-5" />}
           </button>
@@ -57,21 +57,21 @@ function Navbar({ darkMode, setDarkMode }) {
       </div>
 
       {open && (
-        <div className="border-t border-slate-200/80 bg-white px-6 py-4 dark:border-slate-700/80 dark:bg-slate-950">
-          <div className="flex flex-col gap-4">
+        <div className="border-t border-slate-200/60 bg-white px-6 py-4 dark:border-slate-800/60 dark:bg-slate-950 md:hidden">
+          <nav className="flex flex-col gap-1">
             {navItems.map((item) => (
               <NavLink
                 key={item.to}
                 to={item.to}
                 onClick={() => setOpen(false)}
                 className={({ isActive }) =>
-                  `text-base font-medium transition ${isActive ? 'text-primary' : 'text-slate-700 hover:text-primary dark:text-slate-300'}`
+                  `rounded-lg px-3 py-2.5 text-sm font-medium transition-all ${isActive ? 'bg-primary/10 text-primary' : 'text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800'}`
                 }
               >
                 {item.label}
               </NavLink>
             ))}
-          </div>
+          </nav>
         </div>
       )}
     </header>

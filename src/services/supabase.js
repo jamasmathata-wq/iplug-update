@@ -1,14 +1,6 @@
-// Supabase integration readiness stub.
-// Replace the placeholder values with your Supabase project values when ready.
+import { createClient } from '@supabase/supabase-js';
 
-export const supabaseClient = {
-  projectId: '',
-  url: '',
-  key: '',
-  auth: null,
-  from: () => ({ select: () => Promise.resolve({ data: [] }) })
-};
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-export const createSupabaseClient = () => {
-  return supabaseClient;
-};
+export const supabase = createClient(supabaseUrl, supabaseAnonKey);

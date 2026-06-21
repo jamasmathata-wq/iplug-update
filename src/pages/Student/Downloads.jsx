@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { HiDownload } from 'react-icons/hi';
 
 const downloads = [
   { label: 'Course Syllabus', file: 'PDF' },
@@ -9,20 +9,24 @@ const downloads = [
 function Downloads() {
   return (
     <div className="space-y-6">
-      <div className="card p-6">
-        <h1 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">Downloads</h1>
-        <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">Download course materials and resources for your classes.</p>
+      <div>
+        <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Downloads</h1>
+        <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">Course materials and resources for your classes.</p>
       </div>
-
-      <div className="grid gap-4">
+      <div className="space-y-3">
         {downloads.map((item) => (
-          <motion.div key={item.label} whileHover={{ y: -3 }} className="card flex items-center justify-between gap-4 p-6">
-            <div>
-              <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">{item.label}</h2>
-              <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">Download the latest resource package.</p>
+          <div key={item.label} className="card flex items-center justify-between gap-4 p-5">
+            <div className="flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                <HiDownload className="h-5 w-5" />
+              </div>
+              <div>
+                <h2 className="font-semibold text-slate-900 dark:text-white">{item.label}</h2>
+                <p className="text-xs text-slate-500 dark:text-slate-400">Latest version available</p>
+              </div>
             </div>
-            <div className="rounded-full bg-slate-100 px-4 py-2 text-sm font-semibold text-slate-700 dark:bg-slate-900 dark:text-slate-200">{item.file}</div>
-          </motion.div>
+            <span className="rounded-lg bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600 dark:bg-slate-800 dark:text-slate-300">{item.file}</span>
+          </div>
         ))}
       </div>
     </div>

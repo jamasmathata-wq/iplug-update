@@ -2,42 +2,53 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  color-scheme: light;
-  font-family: 'Poppins', ui-sans-serif, system-ui, sans-serif;
-  background-color: #F8FAFC;
+@layer base {
+  :root {
+    color-scheme: light;
+    font-family: 'Poppins', ui-sans-serif, system-ui, sans-serif;
+  }
+  .dark {
+    color-scheme: dark;
+  }
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  html, body, #root {
+    min-height: 100%;
+  }
+  body {
+    @apply bg-page text-slate-900 antialiased;
+  }
+  .dark body {
+    @apply bg-slate-950 text-slate-100;
+  }
+  *:focus-visible {
+    @apply outline-2 outline-offset-2 outline-primary;
+  }
 }
 
-html, body, #root {
-  min-height: 100%;
-}
-
-body {
-  @apply bg-page text-slate-900 antialiased;
-}
-
-.dark body {
-  background-color: #060b18;
-  color: #e2e8f0;
-}
-
-.dark .card,
-.dark .surface-card {
-  background-color: #0d1630;
-}
-
-.card {
-  @apply bg-white shadow-soft rounded-2xl;
-}
-
-.button-primary {
-  @apply inline-flex items-center justify-center rounded-2xl bg-primary px-5 py-3 text-sm font-semibold text-white transition hover:bg-secondary;
-}
-
-.button-secondary {
-  @apply inline-flex items-center justify-center rounded-2xl border border-secondary bg-white px-5 py-3 text-sm font-semibold text-secondary transition hover:bg-red-50;
-}
-
-.button-accent {
-  @apply inline-flex items-center justify-center rounded-2xl bg-accent px-5 py-3 text-sm font-semibold text-slate-900 transition hover:bg-yellow-400;
+@layer components {
+  .card {
+    @apply rounded-2xl border border-slate-200/60 bg-white shadow-card transition-all duration-300 hover:shadow-card-hover dark:border-slate-800 dark:bg-slate-900;
+  }
+  .button-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-5 py-3 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:bg-primary-600 hover:shadow-md active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-primary/50;
+  }
+  .button-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-700 shadow-sm transition-all duration-200 hover:border-primary hover:text-primary hover:shadow-md active:scale-[0.98] dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:border-primary dark:hover:text-primary focus-visible:ring-2 focus-visible:ring-primary/50;
+  }
+  .button-accent {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-accent px-5 py-3 text-sm font-semibold text-slate-900 shadow-sm transition-all duration-200 hover:bg-accent-600 hover:shadow-md active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-accent/50;
+  }
+  .input-field {
+    @apply w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition-all duration-200 focus:border-primary focus:ring-2 focus:ring-primary/20 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-500 dark:focus:border-primary;
+  }
+  .section-label {
+    @apply text-xs font-semibold uppercase tracking-[0.2em] text-primary;
+  }
+  .section-title {
+    @apply text-3xl font-bold text-slate-900 dark:text-white;
+  }
 }

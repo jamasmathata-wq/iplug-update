@@ -1,13 +1,16 @@
 function Toast({ message, variant = 'info' }) {
-  const baseClass = 'inline-flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium shadow-soft';
   const variants = {
-    info: 'bg-slate-900 text-white',
+    info: 'bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900',
     success: 'bg-emerald-600 text-white',
-    warning: 'bg-amber-500 text-slate-950',
+    warning: 'bg-amber-500 text-slate-900',
     error: 'bg-rose-600 text-white'
   };
 
-  return <div className={`${baseClass} ${variants[variant]}`}>{message}</div>;
+  return (
+    <div className={`inline-flex items-center gap-2 rounded-xl px-4 py-3 text-sm font-medium shadow-lg ${variants[variant]}`}>
+      {message}
+    </div>
+  );
 }
 
 export default Toast;

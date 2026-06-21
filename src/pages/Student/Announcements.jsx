@@ -1,23 +1,45 @@
-import AnnouncementCard from '../../components/AnnouncementCard';
-
-const announcementData = [
-  { title: 'New College Guidelines', description: 'Updated assessment policies are now available in your dashboard.', date: 'Today', author: 'Admin Office' },
-  { title: 'Exam Skills Workshop', description: 'Join the exam readiness session on Thursday at 5 PM.', date: 'Yesterday', author: 'Student Services' },
-  { title: 'Research Invitation', description: 'Volunteer for the new campus research interview series.', date: '3 days ago', author: 'Research Coordinator' }
-];
+import { useState, useEffect } from 'react';
+import { supabase } from '../../services/supabase';
 
 function Announcements() {
+  const [announcements, setAnnouncements] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetch() {
+      const { data } = await supabase.from('announcements').select('*').order('created_at', { ascending: false });
+      setAnnouncements(data || []);
+      setLoading(false);
+    }
+    fetch();
+  }, []);
+
+  if (loading) return <div className="card p-6 text-center text-sm text-slate-400">Loading announcements...</div>;
+
   return (
     <div className="space-y-6">
-      <div className="card p-6">
-        <h1 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">Announcements</h1>
-        <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">Latest campus communications relevant to your profile.</p>
+      <div>
+        <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Announcements</h1>
+        <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">Latest communications from your lecturers and campus.</p>
       </div>
-      <div className="grid gap-6">
-        {announcementData.map((item) => (
-          <AnnouncementCard key={item.title} {...item} />
-        ))}
-      </div>
+
+      {announcements.length === 0 ? (
+        <div className="card p-6 text-center text-sm text-slate-400">No announcements yet.</div>
+      ) : (
+        <div className="space-y-3">
+          {announcements.map((a) => (
+            <div key={a.id} className="card p-5">
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <h2 className="font-semibold text-slate-900 dark:text-white">{a.title}</h2>
+                  <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{a.content}</p>
+                </div>
+                <span className="shrink-0 text-xs text-slate-400">{new Date(a.created_at).toLocaleDateString()}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
