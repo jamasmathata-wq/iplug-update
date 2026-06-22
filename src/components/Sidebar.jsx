@@ -1,5 +1,6 @@
-import { NavLink } from 'react-router-dom';
-import { HiX, HiCube, HiClipboardList, HiBell, HiCalendar, HiBookOpen, HiBriefcase, HiDownload, HiUser, HiChartBar, HiOutlineOfficeBuilding, HiUsers, HiAcademicCap, HiDocumentText, HiTemplate, HiCog, HiTrendingUp, HiClipboardCheck, HiCollection, HiPresentationChartBar } from 'react-icons/hi';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { HiX, HiCube, HiClipboardList, HiBell, HiCalendar, HiBookOpen, HiBriefcase, HiDownload, HiUser, HiChartBar, HiOutlineOfficeBuilding, HiUsers, HiAcademicCap, HiDocumentText, HiTemplate, HiCog, HiTrendingUp, HiClipboardCheck, HiCollection, HiPresentationChartBar, HiLogout } from 'react-icons/hi';
+import { useAuth } from '../contexts/AuthContext';
 
 const menus = {
   student: [
@@ -8,35 +9,36 @@ const menus = {
     { label: 'Assignments', to: '/student/assignments', icon: HiClipboardList },
     { label: 'Tests & Exams', to: '/student/tests', icon: HiAcademicCap },
     { label: 'Timetable', to: '/student/timetable', icon: HiCalendar },
-    { label: 'Subject Resources', to: '/student/resources', icon: HiBookOpen },
-    { label: 'Academic Progress', to: '/student/progress', icon: HiTrendingUp },
+    { label: 'Resources', to: '/student/resources', icon: HiBookOpen },
     { label: 'Downloads', to: '/student/downloads', icon: HiDownload },
-    { label: 'Internships & Careers', to: '/student/internships', icon: HiBriefcase },
+    { label: 'Career Centre', to: '/student/internships', icon: HiBriefcase },
+    { label: 'Academic Progress', to: '/student/progress', icon: HiTrendingUp },
     { label: 'Profile', to: '/student/profile', icon: HiUser }
   ],
   lecturer: [
     { label: 'Dashboard', to: '/lecturer', icon: HiCube },
-    { label: 'Manage Students', to: '/lecturer/manage-students', icon: HiUsers },
+    { label: 'Students', to: '/lecturer/manage-students', icon: HiUsers },
     { label: 'Assignments', to: '/lecturer/assignments', icon: HiClipboardList },
-    { label: 'Grading', to: '/lecturer/grading', icon: HiClipboardCheck },
+    { label: 'Attendance', to: '/lecturer/attendance', icon: HiClipboardCheck },
     { label: 'Resources', to: '/lecturer/resources', icon: HiBookOpen },
-    { label: 'Timetable', to: '/lecturer/timetable', icon: HiCalendar },
     { label: 'Announcements', to: '/lecturer/announcements', icon: HiBell },
-    { label: 'Attendance', to: '/lecturer/attendance', icon: HiDocumentText },
+    { label: 'Grading', to: '/lecturer/grading', icon: HiDocumentText },
     { label: 'Reports', to: '/lecturer/reports', icon: HiPresentationChartBar },
+    { label: 'Timetable', to: '/lecturer/timetable', icon: HiCalendar },
     { label: 'Profile', to: '/lecturer/profile', icon: HiUser }
   ],
   admin: [
     { label: 'Dashboard', to: '/admin', icon: HiCube },
-    { label: 'User Management', to: '/admin/users', icon: HiUsers },
-    { label: 'College Management', to: '/admin/colleges', icon: HiOutlineOfficeBuilding },
-    { label: 'Timetable Management', to: '/admin/timetables', icon: HiCalendar },
-    { label: 'Content Management', to: '/admin/content', icon: HiCollection },
-    { label: 'Analytics', to: '/admin/analytics', icon: HiChartBar },
+    { label: 'Students', to: '/admin/users', icon: HiUsers },
+    { label: 'Lecturers', to: '/admin/users', icon: HiAcademicCap },
+    { label: 'Departments', to: '/admin/colleges', icon: HiOutlineOfficeBuilding },
+    { label: 'Courses', to: '/admin/colleges', icon: HiTemplate },
+    { label: 'Campuses', to: '/admin/colleges', icon: HiCollection },
+    { label: 'Announcements', to: '/admin/content', icon: HiBell },
     { label: 'Reports', to: '/admin/reports', icon: HiPresentationChartBar },
-    { label: 'Announcements', to: '/admin/announcements', icon: HiBell },
+    { label: 'Analytics', to: '/admin/analytics', icon: HiChartBar },
     { label: 'Settings', to: '/admin/settings', icon: HiCog },
-    { label: 'Profile', to: '/admin/profile', icon: HiUser }
+    { label: 'Profile', to: '/admin/settings', icon: HiUser }
   ],
   guest: [
     { label: 'Explore', to: '/guest', icon: HiCube },
@@ -51,6 +53,13 @@ const menus = {
 
 function Sidebar({ role, isOpen, onClose }) {
   const items = menus[role] || [];
+  const { logout } = useAuth();
+  const navigate = useNavigate();
+
+  async function handleLogout() {
+    await logout();
+    navigate('/login');
+  }
 
   return (
     <>
@@ -76,7 +85,7 @@ function Sidebar({ role, isOpen, onClose }) {
             const Icon = item.icon;
             return (
               <NavLink
-                key={item.to}
+                key={item.to + item.label}
                 to={item.to}
                 end={item.to === `/${role}`}
                 onClick={onClose}
@@ -90,6 +99,17 @@ function Sidebar({ role, isOpen, onClose }) {
             );
           })}
         </nav>
+
+        {/* Logout */}
+        {role !== 'guest' && (
+          <button
+            onClick={handleLogout}
+            className="mt-4 flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-red-500 transition-all hover:bg-red-50 dark:hover:bg-red-900/20"
+          >
+            <HiLogout className="h-5 w-5" />
+            <span>Logout</span>
+          </button>
+        )}
       </aside>
     </>
   );

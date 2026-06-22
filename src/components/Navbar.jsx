@@ -6,8 +6,9 @@ const navItems = [
   { label: 'Home', to: '/' },
   { label: 'About', to: '/about' },
   { label: 'Contact', to: '/contact' },
+  { label: 'Guest Access', to: '/guest' },
   { label: 'Login', to: '/login' },
-  { label: 'Guest Access', to: '/guest' }
+  { label: 'Register', to: '/register' }
 ];
 
 function Navbar({ darkMode, setDarkMode }) {
@@ -39,7 +40,7 @@ function Navbar({ darkMode, setDarkMode }) {
           <button
             type="button"
             onClick={() => setDarkMode(!darkMode)}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-600 transition-all duration-200 hover:border-primary hover:text-primary hover:shadow-sm dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:border-primary dark:hover:text-primary"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-600 transition-all duration-200 hover:border-primary hover:text-primary dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300"
             aria-label="Toggle dark mode"
           >
             {darkMode ? <HiSun className="h-5 w-5" /> : <HiMoon className="h-5 w-5" />}
@@ -56,23 +57,42 @@ function Navbar({ darkMode, setDarkMode }) {
         </div>
       </div>
 
+      {/* Mobile Drawer */}
       {open && (
-        <div className="border-t border-slate-200/60 bg-white px-6 py-4 dark:border-slate-800/60 dark:bg-slate-950 md:hidden">
-          <nav className="flex flex-col gap-1">
-            {navItems.map((item) => (
-              <NavLink
-                key={item.to}
-                to={item.to}
-                onClick={() => setOpen(false)}
-                className={({ isActive }) =>
-                  `rounded-lg px-3 py-2.5 text-sm font-medium transition-all ${isActive ? 'bg-primary/10 text-primary' : 'text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800'}`
-                }
+        <>
+          <div className="fixed inset-0 z-40 bg-black/20 backdrop-blur-sm md:hidden" onClick={() => setOpen(false)} />
+          <div className="fixed inset-y-0 right-0 z-50 w-72 border-l border-slate-200/60 bg-white p-6 shadow-xl dark:border-slate-800 dark:bg-slate-900 md:hidden">
+            <div className="flex items-center justify-between mb-6">
+              <p className="text-sm font-bold text-slate-900 dark:text-white">Menu</p>
+              <button onClick={() => setOpen(false)} className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+                <HiOutlineX className="h-5 w-5" />
+              </button>
+            </div>
+            <nav className="flex flex-col gap-1">
+              {navItems.map((item) => (
+                <NavLink
+                  key={item.to}
+                  to={item.to}
+                  onClick={() => setOpen(false)}
+                  className={({ isActive }) =>
+                    `rounded-lg px-3 py-2.5 text-sm font-medium transition-all ${isActive ? 'bg-primary/10 text-primary' : 'text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800'}`
+                  }
+                >
+                  {item.label}
+                </NavLink>
+              ))}
+            </nav>
+            <div className="mt-6 border-t border-slate-200/60 pt-4 dark:border-slate-700">
+              <button
+                onClick={() => { setDarkMode(!darkMode); }}
+                className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
               >
-                {item.label}
-              </NavLink>
-            ))}
-          </nav>
-        </div>
+                {darkMode ? <HiSun className="h-5 w-5" /> : <HiMoon className="h-5 w-5" />}
+                {darkMode ? 'Light Mode' : 'Dark Mode'}
+              </button>
+            </div>
+          </div>
+        </>
       )}
     </header>
   );

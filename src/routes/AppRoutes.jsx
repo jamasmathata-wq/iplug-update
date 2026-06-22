@@ -58,6 +58,7 @@ import GuestCampuses from '../pages/Guest/Campuses';
 import GuestDownloads from '../pages/Guest/Downloads';
 import GuestFAQs from '../pages/Guest/FAQs';
 
+import NotFound from '../pages/Public/NotFound';
 import ProtectedRoute from '../components/ProtectedRoute';
 
 function AppRoutes({ darkMode, setDarkMode }) {
@@ -138,7 +139,7 @@ function AppRoutes({ darkMode, setDarkMode }) {
         <Route path="faqs" element={<GuestFAQs />} />
       </Route>
 
-      <Route path="*" element={<Navigate to="/" replace />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }

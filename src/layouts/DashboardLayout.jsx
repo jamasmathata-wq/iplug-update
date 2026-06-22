@@ -1,13 +1,15 @@
 import { useState } from 'react';
-import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { HiBell, HiOutlineSearch, HiOutlineMenu, HiMoon, HiSun, HiLogout } from 'react-icons/hi';
+import { Outlet, useLocation, useNavigate, Link } from 'react-router-dom';
+import { HiBell, HiOutlineSearch, HiOutlineMenu, HiMoon, HiSun, HiUser, HiLogout, HiCog } from 'react-icons/hi';
 import Sidebar from '../components/Sidebar';
+import Breadcrumbs from '../components/Breadcrumbs';
 import { useAuth } from '../contexts/AuthContext';
 
 const pageTitles = { student: 'Student Portal', lecturer: 'Lecturer Portal', admin: 'Admin Console', guest: 'Guest Access' };
 
 function DashboardLayout({ role, darkMode, setDarkMode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const { logout, profile } = useAuth();
@@ -55,19 +57,44 @@ function DashboardLayout({ role, darkMode, setDarkMode }) {
               <button className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 text-slate-600 transition hover:border-primary hover:text-primary dark:border-slate-700 dark:text-slate-300" aria-label="Notifications">
                 <HiBell className="h-5 w-5" />
               </button>
-              <button
-                onClick={handleLogout}
-                className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 text-slate-600 transition hover:border-red-400 hover:text-red-500 dark:border-slate-700 dark:text-slate-300"
-                aria-label="Logout"
-              >
-                <HiLogout className="h-5 w-5" />
-              </button>
+
+              {/* User Dropdown */}
+              <div className="relative">
+                <button
+                  onClick={() => setUserMenuOpen(!userMenuOpen)}
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 text-slate-600 transition hover:border-primary hover:text-primary dark:border-slate-700 dark:text-slate-300"
+                  aria-label="User menu"
+                >
+                  <HiUser className="h-5 w-5" />
+                </button>
+                {userMenuOpen && (
+                  <>
+                    <div className="fixed inset-0 z-40" onClick={() => setUserMenuOpen(false)} />
+                    <div className="absolute right-0 top-12 z-50 w-56 rounded-xl border border-slate-200 bg-white p-2 shadow-lg dark:border-slate-700 dark:bg-slate-800">
+                      <div className="border-b border-slate-200/60 px-3 py-2 dark:border-slate-700">
+                        <p className="text-sm font-semibold text-slate-900 dark:text-white">{profile?.first_name} {profile?.last_name}</p>
+                        <p className="text-xs text-slate-400">{profile?.user_id} • {profile?.campus}</p>
+                      </div>
+                      <Link to={`/${role}/profile`} onClick={() => setUserMenuOpen(false)} className="mt-1 flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-700">
+                        <HiUser className="h-4 w-4" /> Profile
+                      </Link>
+                      <Link to={`/${role === 'admin' ? 'admin/settings' : role + '/profile'}`} onClick={() => setUserMenuOpen(false)} className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-700">
+                        <HiCog className="h-4 w-4" /> Settings
+                      </Link>
+                      <button onClick={handleLogout} className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20">
+                        <HiLogout className="h-4 w-4" /> Logout
+                      </button>
+                    </div>
+                  </>
+                )}
+              </div>
             </div>
           </div>
         </header>
 
         <main className="flex-1 px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
           <div className="mx-auto max-w-7xl">
+            <Breadcrumbs />
             <Outlet />
           </div>
         </main>
